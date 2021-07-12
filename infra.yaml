@@ -10,14 +10,14 @@
    roles:
      - init
 
-
- - name: DNS servers
-   hosts: dns_servers
+ - name: Install docker
+   hosts: docker
+   gather_facts: false
    become: yes
    roles:
-     - bind
+     - docker
    tags:
-     - bind
+     - docker
 
 
  - name: Prometheus
@@ -112,15 +112,6 @@
      - backup
 
 
- - name: Install docker
-   hosts: docker
-   gather_facts: false
-   become: yes
-   roles:
-     - docker
-   tags:
-     - docker
-
  - name: Setup Grafana Docker container
    hosts: grafana
    gather_facts: no
@@ -130,17 +121,6 @@
      - grafana_docker
    tags:
      - grafana_docker
-
-
- - name: Setup Agama Docker container
-   hosts: app_servers
-   gather_facts: no
-   become: yes
-   roles:
-     - agama_docker
-   tags:
-     - agama_docker
-
 
  - name: Install HAProxy
    hosts: haproxy
